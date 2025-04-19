@@ -24,4 +24,8 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: true,
   },
+
+  nitro: {
+    preset: 'cloudflare-module',
+  },
 });

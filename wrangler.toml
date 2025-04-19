@@ -1,0 +1,11 @@
+compatibility_date = "2024-09-30"
+compatibility_flags = [ "nodejs_compat" ]
+
+name = "content-island-test"
+
+[assets]
+  directory = "./.output/public"
+  not_found_handling = "single-page-application"
+
+[build]
+command = "pnpm generate"
