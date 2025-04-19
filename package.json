@@ -15,13 +15,14 @@
     "@nuxtjs/mdc": "0.16.1",
     "@shikijs/langs": "^3.2.2",
     "@shikijs/themes": "^3.2.2",
-    "eslint": "^9.0.0",
     "nuxt": "^3.16.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177",
   "devDependencies": {
+    "eslint": "^9.0.0",
+    "nitro-cloudflare-dev": "^0.2.2",
     "wrangler": "^4.4.0"
   }
 }
