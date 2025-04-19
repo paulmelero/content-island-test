@@ -3,9 +3,14 @@ compatibility_flags = [ "nodejs_compat" ]
 
 name = "content-island-test"
 
+main = ".output/server/index.mjs"
+
 [assets]
   directory = "./.output/public"
-  not_found_handling = "single-page-application"
+  binding = "ASSETS"
 
 [build]
-command = "pnpm generate"
+command = "pnpm build"
+
+[observability.logs]
+enabled = true
