@@ -1,4 +1,4 @@
-name: Deply to Cloudflare from Content Island
+name: Deploy to Cloudflare from Content Island
 
 on:
   repository_dispatch:
@@ -12,8 +12,23 @@ jobs:
         uses: actions/checkout@v2
 
       - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
 
-      - name: Deploy
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile --ignore-scripts
+
+      # This step triggers a deployment of the Cloudflare Workers project using the Cloudflare GH Action.
+      - name: Trigger Cloudflare Workers deployment
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: '4.12.0'
+          ackageManager: npm
