@@ -17,8 +17,7 @@ export default defineNuxtConfig({
   },
   mdc: {
     highlight: {
-      shikiEngine: 'oniguruma',
-      highlighter: 'shiki',
+      shikiEngine: 'javascript',
       themes: ['github-light', 'github-dark'],
     },
     headings: {
