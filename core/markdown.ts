@@ -1,24 +1,17 @@
-import { fromAsyncCodeToHtml } from '@shikijs/markdown-it/async';
-import { codeToHtml } from 'shiki';
-import MarkdownItAsync from 'markdown-it-async';
+import hljs from 'highlight.js';
+import { marked } from 'marked';
 
 export const transpileMarkdown = async (markdown: string) => {
-  const md = MarkdownItAsync();
+  const renderer = new marked.Renderer();
+  renderer.code = ({ text, lang }) => {
+    const validLang = hljs.getLanguage(lang || 'plaintext')
+      ? lang || 'plaintext'
+      : 'plaintext';
+    const highlighted = hljs.highlight(text, { language: validLang }).value;
+    return `<pre><code class="hljs ${validLang}">${highlighted}</code></pre>`;
+  };
 
-  md.use(
-    fromAsyncCodeToHtml(
-      // Pass the codeToHtml function
-      codeToHtml,
-      {
-        themes: {
-          light: 'github-light',
-          dark: 'github-dark',
-        },
-      }
-    )
-  );
+  marked.setOptions({ renderer });
 
-  const content = await md.renderAsync(markdown);
-
-  return content;
+  return marked(markdown);
 };

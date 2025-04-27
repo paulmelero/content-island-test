@@ -32,9 +32,12 @@ const route = useRoute();
 const id = route.params.id as string;
 
 useHead({
-  htmlAttrs: {
-    class: 'dark',
-  },
+  link: [
+    {
+      rel: 'stylesheet',
+      href: 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css',
+    },
+  ],
 });
 
 const { data: post } = await useAsyncData<Post>(id, async () => {
