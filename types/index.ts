@@ -21,3 +21,7 @@ export type Post = {
     link: string;
   };
 };
+
+export type PostsWithSlug = Post & {
+  slug: string;
+};

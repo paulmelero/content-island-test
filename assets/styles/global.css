@@ -52,19 +52,6 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: var(--ff-body);
-  font-size: var(--fs-sm);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  color: var(--text-color);
-}
-
-main {
-  flex: 1;
-}
-
 .container {
   width: 90%;
   max-width: 1200px;

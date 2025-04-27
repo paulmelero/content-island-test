@@ -1,27 +1,37 @@
 <template>
   <div class="about">
-    <div class="about__header" v-if="data">
+    <div class="about__header" v-if="page">
       <img
-        :src="data.picture.link"
-        :alt="data.picture.name"
+        :src="page.picture.link"
+        :alt="page.picture.name"
         class="about__image"
       />
       <div class="about__intro">
-        <h1>I'm {{ data.fullname }}</h1>
-        <p>{{ data.shortBio }}</p>
+        <h1>I'm {{ page.fullname }}</h1>
+        <p>{{ page.shortBio }}</p>
       </div>
     </div>
 
-    <MDC v-if="data" :value="data.extendedBio" tag="div" class="about__bio" />
+    <div v-if="page" v-html="page.extendedBio" class="about__bio" />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { About } from '@/types';
+import { transpileMarkdown } from '~/core/markdown';
 
-const { data } = await useFetch<About>(
-  '/api/content/About/6803929dce4621f0d82cb265'
-);
+const { data: page } = await useAsyncData<About>('about', async () => {
+  const page = await $fetch<About>(
+    '/api/content/About/6803929dce4621f0d82cb265'
+  );
+
+  const extendedBio = await transpileMarkdown(page.extendedBio);
+
+  return {
+    ...page,
+    extendedBio,
+  };
+});
 </script>
 
 <style scoped>

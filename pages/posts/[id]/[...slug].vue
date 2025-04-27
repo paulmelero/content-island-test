@@ -6,11 +6,13 @@
     <article class="article" v-if="post">
       <header class="article__header">
         <p>
-          <time datetime="2025-03-05">{{ postDate }}</time>
+          <time datetime="2025-03-05">{{ post.date }}</time>
         </p>
         <h1 class="article__title">{{ post.title }}</h1>
       </header>
-      <MDC :value="post.content" class="article__content" />
+
+      <div v-html="post.content" class="article__content" />
+
       <footer>
         <p>
           Written by <strong>{{ post.author }}</strong>
@@ -22,29 +24,31 @@
 
 <script setup lang="ts">
 import { formatDate } from '~/core/formatDate';
+import { transpileMarkdown } from '~/core/markdown';
 import type { Post } from '~/types';
 
 const route = useRoute();
 
 const id = route.params.id as string;
 
-const nuxtApp = useNuxtApp();
-const { data: post } = await useAsyncData<Post>(
-  id,
-  () => $fetch<Post>(`/api/content/post/${id}`),
-  // optimization
-  {
-    getCachedData(key) {
-      return nuxtApp.payload.data[key] || nuxtApp.static.data[key];
-    },
-  }
-);
+useHead({
+  htmlAttrs: {
+    class: 'dark',
+  },
+});
 
-const postDate = computed(() => {
-  if (!post.value || !post.value.date) {
-    return '';
-  }
-  return formatDate(post.value.date);
+const { data: post } = await useAsyncData<Post>(id, async () => {
+  const post = await $fetch<Post>(`/api/content/post/${id}`);
+
+  const date = formatDate(post.date || new Date());
+
+  const content = await transpileMarkdown(post.content);
+
+  return {
+    ...post,
+    date,
+    content,
+  };
 });
 </script>
 
@@ -109,7 +113,6 @@ const postDate = computed(() => {
   code {
     font-size: var(--fs-xs);
     border-radius: var(--border-radius);
-    padding: var(--space-xs);
   }
 }
 </style>
