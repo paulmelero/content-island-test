@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     contentIslandSecretToken: process.env.CONTENT_ISLAND_SECRET_TOKEN,
   },
-  css: ['@/assets/styles/global.css', '@/assets/styles/dracula.css'],
+  css: ['@/assets/styles/global.css'],
   modules: ['@nuxt/eslint', '@nuxt/fonts', 'nitro-cloudflare-dev'],
   fonts: {
     processCSSVariables: true,
