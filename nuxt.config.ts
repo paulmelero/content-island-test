@@ -18,4 +18,10 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'cloudflare-module',
   },
+
+  routeRules: {
+    '/': { prerender: true },
+    '/about': { prerender: true },
+    '/posts/**': { prerender: true },
+  },
 });
