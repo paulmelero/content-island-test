@@ -22,6 +22,6 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/about': { prerender: true },
-    '/posts/**': { prerender: true },
+    '/posts/**/**': { prerender: true },
   },
 });
