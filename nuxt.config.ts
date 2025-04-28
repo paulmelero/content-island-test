@@ -10,10 +10,6 @@ export default defineNuxtConfig({
 
   css: ['@/assets/styles/global.css'],
 
-  experimental: {
-    payloadExtraction: true,
-  },
-
   nitro: {
     preset: 'cloudflare-module',
   },
