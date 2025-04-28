@@ -23,6 +23,7 @@
   "packageManager": "pnpm@9.15.9",
   "devDependencies": {
     "eslint": "^9.0.0",
+    "lightningcss": "^1.29.3",
     "nitro-cloudflare-dev": "^0.2.2"
   }
 }
