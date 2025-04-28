@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/about': { prerender: true },
-    '/posts/**/**': { prerender: true },
+    '/posts/**': { prerender: true },
   },
 
   modules: ['@nuxt/eslint', '@nuxt/fonts', 'nitro-cloudflare-dev'],
