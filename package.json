@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "generate": "nuxt generate",
     "dev": "nuxt dev",
     "preview": "nuxt preview",
-    "cf:preview": "npx wrangler --cwd ./ dev",
+    "cf:preview": "npx wrangler --cwd dist/ pages dev",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {

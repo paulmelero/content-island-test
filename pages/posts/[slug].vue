@@ -25,24 +25,32 @@
 <script setup lang="ts">
 import { formatDate } from '~/core/formatDate';
 import { transpileMarkdown } from '~/core/markdown';
+import { slugify } from '~/core/slugify';
 import type { Post } from '~/types';
 
 const route = useRoute();
 
-const id = route.params.id as string;
+const slug = route.params.slug as string;
 
-const { data: post } = await useAsyncData<Post>(id, async () => {
-  const post = await $fetch<Post>(`/api/content/post/${id}`);
+const { $contentIsland } = useNuxtApp();
 
-  const date = formatDate(post.date || new Date());
+const { data: post } = await useAsyncData<Post>(`post-${slug}`, async () => {
+  const posts = await $contentIsland.getList<Post>('post');
 
-  const content = await transpileMarkdown(post.content);
+  const foundPost = posts.find((post) => slugify(post.title) === slug);
+
+  if (!foundPost) {
+    throw createError({
+      statusCode: 404,
+      message: `Post with slug "${slug}" not found`,
+    });
+  }
 
   return {
-    ...post,
-    date,
-    content,
-  };
+    ...foundPost,
+    date: formatDate(foundPost.date || new Date()),
+    content: await transpileMarkdown(foundPost.content),
+  } satisfies Post;
 });
 </script>
 

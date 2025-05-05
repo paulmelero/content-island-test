@@ -20,9 +20,11 @@
 import type { About } from '@/types';
 import { transpileMarkdown } from '~/core/markdown';
 
+const { $contentIsland } = useNuxtApp();
 const { data: page } = await useAsyncData<About>('about', async () => {
-  const page = await $fetch<About>(
-    '/api/content/About/6803929dce4621f0d82cb265'
+  const page = await $contentIsland.getById<About>(
+    '6803929dce4621f0d82cb265',
+    'About'
   );
 
   const extendedBio = await transpileMarkdown(page.extendedBio);

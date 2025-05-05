@@ -7,7 +7,7 @@
     <ul class="posts__list">
       <li v-for="post in data">
         <article class="post">
-          <NuxtLink :to="`/posts/${post.id}/${post.slug}`" class="post__link">
+          <NuxtLink :to="`/posts/${post.slug}`" class="post__link">
             <img
               :src="post.image.link"
               :alt="post.image.name"
@@ -25,9 +25,7 @@
                   })
                 }}</time>
               </p>
-              <NuxtLink
-                :to="`/posts/${post.id}/${post.slug}`"
-                class="post__title"
+              <NuxtLink :to="`/posts/${post.slug}`" class="post__title"
                 ><h2>{{ post.title }}</h2>
 
                 <div>
@@ -50,8 +48,8 @@ import { slugify } from '~/core/slugify';
 
 const nuxtApp = useNuxtApp();
 const { data } = await useAsyncData<PostsWithSlug[]>(
-  'posts',
-  () => $fetch<PostsWithSlug[]>('/api/content/post'),
+  'posts-index',
+  () => nuxtApp.$contentIsland.getList('post'),
   {
     // optimization
     getCachedData(key) {

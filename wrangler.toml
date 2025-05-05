@@ -1,16 +1,8 @@
-compatibility_date = "2025-04-02"
-compatibility_flags = [ "nodejs_compat", "no_nodejs_compat_v2" ]
+compatibility_date = "2025-05-05"
 
 name = "content-island-test"
 
-main = ".output/server/index.mjs"
+pages_build_output_dir = "dist"
 
-[assets]
-  directory = ".output/public"
-  binding = "ASSETS"
-
-[build]
-  command = "pnpm build"
-
-[observability.logs]
-enabled = true
+[env.production]
+compatibility_flags = [ "nodejs_compat" ]

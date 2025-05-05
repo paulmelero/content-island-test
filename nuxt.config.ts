@@ -5,13 +5,18 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   runtimeConfig: {
-    contentIslandSecretToken: process.env.CONTENT_ISLAND_SECRET_TOKEN,
+    public: {
+      contentIslandToken: process.env.NUXT_CONTENT_ISLAND_TOKEN,
+    },
   },
 
   css: ['@/assets/styles/global.css'],
 
   nitro: {
-    preset: 'cloudflare-module',
+    preset: 'cloudflare_pages',
+    prerender: {
+      autoSubfolderIndex: false,
+    },
   },
 
   vite: {
@@ -21,12 +26,6 @@ export default defineNuxtConfig({
     build: {
       cssMinify: 'lightningcss',
     },
-  },
-
-  routeRules: {
-    '/': { prerender: true },
-    '/about': { prerender: true },
-    '/posts/**': { prerender: true },
   },
 
   modules: ['@nuxt/eslint', '@nuxt/fonts', 'nitro-cloudflare-dev'],
